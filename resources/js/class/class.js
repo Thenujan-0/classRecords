@@ -151,13 +151,6 @@ $(document).ready(function(){
                 // $(".datePopup").css({"top":e.pageY,"left":e.pageX})
                 datePopup.show(date,e.pageX,e.pageY,class_)
             })
-            $(".btn.dateItem > p").click(
-                function(e){
-                    // e.preventDefault();
-                    // console.log("Recieved click",$(this).parent());
-                    // $(this).parent().click()
-                    // e.stopPropagation()
-            })
 
         },
         get:function(){
@@ -392,12 +385,11 @@ $(document).ready(function(){
 
 
     function clickedOnDate(event){
-        return $(".btn.dateItem").toArray().some(function(elem){elem.contains(event.target)})
+        return $(".btn.dateItem").toArray().some(function(elem){return elem.contains(event.target)})
     }
     
     $(document).click(function(e){
 
-        console.log("CLick event handled")
         //If clicked outside calendar date hide the popup
         if ( !clickedOnDate(e) && !datePopup.elem[0].contains(e.target) ){
             datePopup.hide()
@@ -430,16 +422,13 @@ $(document).ready(function(){
         async:true,
 
         success:function(dates){
-            console.log("got dates")
             $.ajax({url:"/class/"+get_classId()+"/getFinalRecord",
                 dataType:"json",
                 type:"get",
                 async:true,
                 success:function(lastReset){
                     let [ year , month , day] = lastReset.split("-")
-                    console.log(year,month,day)
                     let lastResetDate = new Date(year,month-1,day)
-                    console.log(lastResetDate,"lasResetDate")
 
                     let count = 0
                     dates.forEach(function(date){
@@ -448,10 +437,6 @@ $(document).ready(function(){
                         if (targetDate >lastResetDate){
                             count++
                         }
-                        else{
-                            console.log(targetDate)
-                        }
-                        // console.log(targetDate , currDate , targetDate >currDate)
                     })
                     
                     callback(count)
@@ -475,7 +460,6 @@ $(document).ready(function(){
             async:true,
 
             success:function(resp){
-                console.log("response chellam",resp)
                 let elem =$("span#currClassCount")
                 if (resp!=null){
                     elem.text(resp)
@@ -499,7 +483,6 @@ $(document).ready(function(){
             async:true,
 
             success:function(resp){
-                console.log("response chellam",resp)
                 let elem =$("span#finClassCount")
                 if (resp!=null){
                     let text= ""
