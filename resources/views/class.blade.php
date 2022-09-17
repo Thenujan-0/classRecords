@@ -8,7 +8,7 @@
     <div class="card p-4 container" style="width:-fit-content;">
         <div class="card-body d-flex flex-column align-items-center" style="width:-fit-content;">
             <div class="class-header d-flex align-items-center mb-5 justify-content-between">
-                <h3 class="card-title mx-1">{{$class->name}}</h3>
+                <h3 class="card-title mx-1 className">{{$class->name}}</h3>
                 <div class="btn" id="btnClassMenu">
                     <i class="fa-solid fa-bars"></i>
                 </div>
@@ -82,11 +82,14 @@
     <div class="btn btn-secondary btnFinalDate">Set as final class</div>
 </div>
 
-<div class="menuPopup position-absolute  bg-white p-3 border rounded" style="display:none">
-    <div class="btn btn-danger">Delete Class</div>
+<div class="menuPopup position-absolute  bg-white p-3 border rounded " style="display:none">
+    <div class="cont d-flex flex-column">
+        <div class="btn btn-warning btnEdit mb-1">Edit Class Name</div>
+        <div class="btn btn-danger btnDel">Delete Class</div>
+    </div>
 </div>
 
-
+@include("includes.textInput",["id"=>"editClassModal"])
 
 @endsection
 

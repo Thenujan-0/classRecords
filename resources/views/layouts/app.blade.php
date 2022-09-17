@@ -88,7 +88,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <p class="dialog-text"></p>
+                            <p class="dialog-text fs-5"></p>
                             <div class="buttons d-flex justify-content-between">
                                 <button class="btn bg-gray btnCancel">Cancel</button>
                                 <button class="btn btn-warning btnConfirm">Confirm</button>

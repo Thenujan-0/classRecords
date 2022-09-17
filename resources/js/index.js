@@ -5,7 +5,7 @@ $(document).ready(function(){
 
 
     $("#createClassModal #btnCreateClass").click(function(){
-        let name_ = $("#createClassModal #classNameInput").val()
+        let name_ = $("#createClassModal .input-text").val()
         console.log(name_)
         $.post("/class",{_token:token,name:name_},function(resp){
             console.log("resp",resp)

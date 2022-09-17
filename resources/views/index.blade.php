@@ -23,21 +23,7 @@
 </div>
 <div class="position-absolute btn btn-primary m-4 end-0 bottom-0 rounded-circle py-3 shadow" data-bs-toggle="modal" data-bs-target="#createClassModal">Add</div>
 
-<div class="modal fade" id="createClassModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body d-flex flex-column align-items-center">
-                <p class="text-center">Enter name for the class</p>
-                <div class="input-group">
-                    <input class="w-100" type="text" name="className" id="classNameInput">
-                </div>
-                <div>
-                    <button class="btn btn-primary mt-4" id="btnCreateClass">Create</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include("includes.textInput",["id"=>"createClassModal"])
 
 
 @endsection

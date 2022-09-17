@@ -275,9 +275,12 @@ $(document).ready(function(){
 
     let [year , month] = getLastYearMonth()
     if ([month,year].includes(undefined)){
+        console.log("NO records exist already so setting calendar to current date")
         let date = new Date()
         year = date.getFullYear()
-        month = date.getDate()
+        month = date.getMonth()+1
+        console.log(year,month)
+        
         cal.set(year,month)
     }else{
         cal.set(year,month)
@@ -397,18 +400,77 @@ $(document).ready(function(){
         if( ! menuPopup.trigger[0].contains(e.target) && !menuPopup.elem[0].contains(e.target)){
             menuPopup.hide()
         }
+
+        console.log(menuPopup.elem[0].contains(e.target))
+        console.log(menuPopup.trigger[0].contains(e.target))
     })
 
     let menuPopup = {
         trigger:$("#btnClassMenu"),
         elem :$(".menuPopup"),
+        btnDel:$(".menuPopup .btnDel"),
+        btnEdit:$(".menuPopup .btnEdit"),
         hide:function(){
             menuPopup.elem.css("display","none")
+            console.log("hiding elem",menuPopup.elem)
         },
         show(x,y){
             menuPopup.elem.css({"display":"block","left":x+10,"top":y+10})
         }
     }
+    menuPopup.btnDel.click(function(){
+        confPopup.show("Are you sure want to delete the class named \""+$("h3.className").text()+"\"?",
+        function(){
+            $.ajax({url:"/class/"+get_classId(),
+                dataType:"json",
+                type:"delete",
+                data:{_token:token},
+                async:true,
+                success:function(){window.location.href="/"},
+                error:function(resp){
+                    console.log("error occured on delete class",resp.responseText)
+                }
+            })
+        })
+    })
+
+    menuPopup.btnEdit.click(function(){
+        let modal = $("#editClassModal")
+        modal.modal("show")
+        console.log(modal.find("p.header-text"),"elem")
+        modal.find("p.header-text").html("Enter new name for the class")
+        let btn =modal.find(".btn.btn-primary")
+                        .html("Save")
+                        .addClass("btn-warning")
+                        .removeClass("btn-primary")
+
+        btn.click(function(){
+            console.log(modal.find(".input-text"))
+            console.log(modal.find(".input-text").val())
+            $.ajax({url:"/class/"+get_classId(),
+                dataType:"json",
+                type:"PATCH",
+                data:{"name":modal.find(".input-text").val(),_token:token},
+                async:true,
+
+                success:function(resp){
+                    console.log("success",resp)
+                    modal.modal("hide")
+                    if (resp.responseText=="null"){
+                        console.log("Error occured please enter valid name")
+                        return
+                    }
+                    window.location.reload()
+
+
+                },
+                error:function(resp){
+                    console.log("error",resp.responseText,resp)
+                }
+            })
+        })
+
+    })
     menuPopup.trigger.click(function(e){
         let x = e.pageX
         let y = e.pageY
@@ -508,8 +570,6 @@ $(document).ready(function(){
 
     setCurrClassCount()
     setLastFinalClass()
-
-
 
     
 

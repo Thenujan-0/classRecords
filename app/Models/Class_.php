@@ -33,8 +33,12 @@ class Class_ extends Model
 
     public function classCount(){
         $lastReset = $this->last_reset_on;
-        if ($lastReset==null){
+        $count = $this->records()->get("date")->count();
+        if ($count == null){
             return null;
+        }
+        if ($lastReset==null){
+            return $count;
         }
         $recordsCount = $this->records()->where("date",">",$lastReset)->get("date")->count();
         return $recordsCount;

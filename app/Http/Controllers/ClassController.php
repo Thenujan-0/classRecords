@@ -87,7 +87,17 @@ class ClassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $class =Class_::find($id);
+        $name = $request->input("name");
+        Debugbar::warning($name,"Name");
+
+        if ($name==null){
+            return json_encode("null");
+        }
+        $class->name = $name;
+        Debugbar::warning($name);
+        $class->update();
+        return json_encode("success");
     }
 
     /**
@@ -98,7 +108,9 @@ class ClassController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Class_::find($id)->delete();
+        return json_encode("success");
+
     }
 
 
@@ -131,7 +143,6 @@ class ClassController extends Controller
         $recordsCount = $class->classCount();
         return json_encode($recordsCount);
         
-
-        
     }
+
 }
